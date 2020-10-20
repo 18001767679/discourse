@@ -168,6 +168,7 @@ export function acceptance(name, optionsOrCallback) {
   addPretenderCallback(name, options.pretend);
 
   let loggedIn = false;
+  let mobileView = false;
   let siteChanges;
   let settingChanges;
   let userChanges;
@@ -180,7 +181,7 @@ export function acceptance(name, optionsOrCallback) {
       HeaderComponent.reopen({ examineDockHeader: function () {} });
 
       resetExtraClasses();
-      if (options.mobileView) {
+      if (mobileView) {
         forceMobile();
       }
 
@@ -266,6 +267,9 @@ export function acceptance(name, optionsOrCallback) {
     settings(changes) {
       settingChanges = changes;
     },
+    mobileView() {
+      mobileView = true;
+    },
   };
 
   if (options.loggedIn) {
@@ -276,6 +280,9 @@ export function acceptance(name, optionsOrCallback) {
   }
   if (options.settings) {
     needs.settings(options.settings);
+  }
+  if (options.mobileView) {
+    needs.mobileView();
   }
 
   if (callback) {
